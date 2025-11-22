@@ -1,4 +1,4 @@
-package com.kiki.ecommerce.dto;
+package com.kiki.ecommerce.dto.userDto;
 
 import lombok.Builder;
 import lombok.Data;

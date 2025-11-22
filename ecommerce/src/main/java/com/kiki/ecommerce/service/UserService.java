@@ -1,7 +1,7 @@
 package com.kiki.ecommerce.service;
 
-import com.kiki.ecommerce.dto.UserReqDto;
-import com.kiki.ecommerce.dto.UserRespDto;
+import com.kiki.ecommerce.dto.userDto.UserReqDto;
+import com.kiki.ecommerce.dto.userDto.UserRespDto;
 
 
 public interface UserService {

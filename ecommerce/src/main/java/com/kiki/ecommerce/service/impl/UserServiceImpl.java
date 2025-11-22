@@ -1,15 +1,16 @@
-package com.kiki.ecommerce.service;
+package com.kiki.ecommerce.service.impl;
 
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.kiki.ecommerce.dto.UserReqDto;
-import com.kiki.ecommerce.dto.UserRespDto;
+import com.kiki.ecommerce.dto.userDto.UserReqDto;
+import com.kiki.ecommerce.dto.userDto.UserRespDto;
 import com.kiki.ecommerce.entity.BizException;
 import com.kiki.ecommerce.entity.User;
 import com.kiki.ecommerce.repository.UserRepository;
 import com.kiki.ecommerce.security.JwtService;
+import com.kiki.ecommerce.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserRespDto register(UserReqDto dto) {
-        if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
+        if (!userRepository.existsByUsername(dto.getUsername())) {
             throw new BizException(400, "User already exists.");
         }
         User user = User.builder()

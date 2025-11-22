@@ -5,10 +5,10 @@ package com.kiki.ecommerce.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import com.kiki.ecommerce.service.UserServiceImpl;
 import com.kiki.ecommerce.common.ApiResponse;
-import com.kiki.ecommerce.dto.UserReqDto;
-import com.kiki.ecommerce.dto.UserRespDto;
+import com.kiki.ecommerce.dto.userDto.UserReqDto;
+import com.kiki.ecommerce.dto.userDto.UserRespDto;
+import com.kiki.ecommerce.service.impl.UserServiceImpl;
 
 
 @RestController
