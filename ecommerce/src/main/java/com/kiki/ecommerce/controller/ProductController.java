@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.kiki.ecommerce.common.ApiResponse;
 import com.kiki.ecommerce.dto.productDto.ProductReqDto;
 import com.kiki.ecommerce.dto.productDto.ProductRespDto;
-import com.kiki.ecommerce.service.impl.ProductServiceImpl;
+import com.kiki.ecommerce.service.ProductService;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,31 +18,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductServiceImpl productServiceImpl;
+    private final ProductService productService;
 
     @PostMapping("/create")
     public ApiResponse<ProductRespDto> create(@RequestBody ProductReqDto reqDto) {
-        return ApiResponse.success("Created product successfully", productServiceImpl.create(reqDto));
+        return ApiResponse.success("Created product successfully", productService.create(reqDto));
     }
 
     @GetMapping("/{id}")
     public ApiResponse<ProductRespDto> getById(@PathVariable Long id) {
-        return ApiResponse.success("OK", productServiceImpl.getById(id));
+        return ApiResponse.success("OK", productService.getById(id));
     }
 
     @GetMapping
     public ApiResponse<List<ProductRespDto>> getAll() {
-        return ApiResponse.success("OK", productServiceImpl.getAll());
+        return ApiResponse.success("OK", productService.getAll());
     }
 
     @PutMapping("/{id}")
     public ApiResponse<ProductRespDto> update(@PathVariable Long id,  @RequestBody ProductReqDto reqDto) {
-        return ApiResponse.success("Updated successfully", productServiceImpl.update(id, reqDto));
+        return ApiResponse.success("Updated successfully", productService.update(id, reqDto));
     }
 
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
-        productServiceImpl.delete(id);
+        productService.delete(id);
         return ApiResponse.success("Deleted successfully", null);
     }
 }

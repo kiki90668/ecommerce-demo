@@ -1,5 +1,7 @@
 package com.kiki.ecommerce.dto.productDto;
 
+import java.math.BigDecimal;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,6 +10,6 @@ import lombok.Data;
 public class ProductRespDto {
     private Long id;
     private String name;
-    private Integer price;
+    private BigDecimal price;
     private Integer stock;
 }

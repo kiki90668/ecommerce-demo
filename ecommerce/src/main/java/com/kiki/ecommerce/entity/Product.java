@@ -1,5 +1,7 @@
 package com.kiki.ecommerce.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +18,6 @@ public class Product {
     private Long id;
 
     private String name;
-    private Integer price;
+    private BigDecimal price;
     private Integer stock;
 }

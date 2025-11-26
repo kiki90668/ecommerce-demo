@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService{
     public ProductRespDto create(ProductReqDto reqDto) {
         //檢查產品是否存在
         if (productRepo.existsByName(reqDto.getName())) {
-            throw new BizException(400, "Product already exists.");
+            throw new BizException(400, "商品名稱已存在");
         }
         Product newProduct = Product.builder()
                 .name(reqDto.getName())
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService{
     //取得單一商品
     public ProductRespDto getById(Long id) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new BizException(404, "Product not found"));
+                .orElseThrow(() -> new BizException(404, "商品不存在"));
 
         return mapToDto(product);
     }
@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService{
     //更新商品
     public ProductRespDto update(Long id, ProductReqDto reqDto) {
         Product product = productRepo.findById(id)
-                .orElseThrow(() -> new BizException(404, "Product not found"));
+                .orElseThrow(() -> new BizException(404, "商品不存在"));
         product.setName(reqDto.getName());
         product.setPrice(reqDto.getPrice());
         product.setStock(reqDto.getStock());
@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService{
     //刪除商品
     public void delete(Long id) {
         if (!productRepo.existsById(id)) {
-            throw new BizException(404, "Product not found");
+            throw new BizException(404, "商品不存在");
         }
         productRepo.deleteById(id);
     }

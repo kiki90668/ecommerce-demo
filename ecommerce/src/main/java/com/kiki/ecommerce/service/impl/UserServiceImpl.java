@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserRespDto register(UserReqDto dto) {
         if (!userRepository.existsByUsername(dto.getUsername())) {
-            throw new BizException(400, "User already exists.");
+            throw new BizException(400, "使用者已存在");
         }
         User user = User.builder()
                 .username(dto.getUsername())
@@ -47,11 +47,11 @@ public class UserServiceImpl implements UserService {
     public UserRespDto login(UserReqDto dto) {
         //確認使用者是否存在
         User user = userRepository.findByUsername(dto.getUsername())
-                .orElseThrow(() -> new BizException(400, "User not found"));
+                .orElseThrow(() -> new BizException(404, "使用者不存在"));
 
         //驗證密碼
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-            throw new BizException(400, "Password is incorrect");
+            throw new BizException(404, "密碼錯誤");
         }
 
         //生成JWT token
