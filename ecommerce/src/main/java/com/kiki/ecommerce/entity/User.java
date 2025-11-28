@@ -25,5 +25,6 @@ private String password;
 @Column(name = "mobile_no", unique = true, length = 10, nullable = true)
 private String mobileNo;
 
+@Column(nullable = false)
 private String role; //User or Admin
 }

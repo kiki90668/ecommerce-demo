@@ -1,6 +1,10 @@
 package com.kiki.ecommerce.service.impl;
 
 
+import java.util.List;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -54,8 +58,14 @@ public class UserServiceImpl implements UserService {
             throw new BizException(404, "密碼錯誤");
         }
 
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
+            user.getUsername(),
+            user.getPassword(),
+            List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole()))
+        );
+
         //生成JWT token
-        String token = jwtService.generateToken(user.getUsername());
+        String token = jwtService.generateToken(userDetails);
 
         return UserRespDto.builder()
                 .id(user.getId())

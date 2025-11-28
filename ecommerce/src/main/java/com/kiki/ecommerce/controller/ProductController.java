@@ -2,6 +2,7 @@ package com.kiki.ecommerce.controller;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,6 +21,7 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ApiResponse<ProductRespDto> create(@RequestBody ProductReqDto reqDto) {
         return ApiResponse.success("Created product successfully", productService.create(reqDto));
@@ -35,11 +37,13 @@ public class ProductController {
         return ApiResponse.success("OK", productService.getAll());
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ApiResponse<ProductRespDto> update(@PathVariable Long id,  @RequestBody ProductReqDto reqDto) {
         return ApiResponse.success("Updated successfully", productService.update(id, reqDto));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Long id) {
         productService.delete(id);

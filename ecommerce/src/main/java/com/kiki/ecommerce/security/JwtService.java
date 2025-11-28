@@ -5,6 +5,8 @@ package com.kiki.ecommerce.security;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -27,13 +29,26 @@ public class JwtService {
 
 
     //生成JWT token
-    public String generateToken(String username) {
+    public String generateToken(UserDetails userDetails) {
+        //從UserDetails中提取role
+        String fullRole = userDetails.getAuthorities().stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse("ROLE_USER");
+        
+        //去掉ROLE_前綴
+        String role = fullRole;
+        if (fullRole.startsWith("ROLE_")) {
+            role = fullRole.substring(5);
+        }
+
         return Jwts.builder()
-                    .setSubject(username) //設定主體
+                    .setSubject(userDetails.getUsername()) //設定主體
+                    .claim("role", role)
                     .setIssuedAt(new Date()) //設定發行時間
                     .setExpiration(new Date(System.currentTimeMillis() + expiration)) //設定過期時間
                     .signWith(getSigningKey(), SignatureAlgorithm.HS256) //設定簽名算法和密鑰
-                    .compact(); //生成JWT
+                    .compact();
     }
 
     //從token中提取用戶名
